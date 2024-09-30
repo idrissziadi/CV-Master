@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box, InputAdornment, Avatar, Typography, Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Box, InputAdornment, Avatar, Typography, Grid, Divider } from '@mui/material';
 import { AccountCircle, Email, Phone, Home, InsertPhoto } from '@mui/icons-material';
 
-const PersonalInfoForm = ({ onDataChange }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    address: '',
-    phone: '',
-    profileImage: ''
-  });
-
+const PersonalInfoForm = ({ formData, onDataChange, setFormValid }) => {
+  const [formDataState, setFormDataState] = useState(formData); // State for the form data
   const [errors, setErrors] = useState({
     email: '',
     phone: ''
   });
 
-  // Validation des champs
+  useEffect(() => {
+    setFormDataState(formData); // Update local state when formData changes
+  }, [formData]);
+
+  // Validation functions
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email) ? '' : 'Email invalide';
@@ -27,34 +24,65 @@ const PersonalInfoForm = ({ onDataChange }) => {
     return phoneRegex.test(phone) ? '' : 'Numéro de téléphone invalide';
   };
 
-  // Gestion des changements
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const validateForm = () => {
+    const emailError = validateEmail(formDataState.email);
+    const phoneError = validatePhone(formDataState.phone);
+    const isValid = Object.values({ ...errors, email: emailError, phone: phoneError }).every(x => x === '') &&
+                    formDataState.name.trim() !== '' &&
+                    formDataState.address.trim() !== '';
 
-    // Validation en temps réel
-    if (name === 'email') {
-      setErrors({ ...errors, email: validateEmail(value) });
-    } else if (name === 'phone') {
-      setErrors({ ...errors, phone: validatePhone(value) });
-    }
-
-    onDataChange({ ...formData, [name]: value });
+    setFormValid(isValid);
   };
 
-  // Gestion du téléchargement d'image
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormDataState({ ...formDataState, [name]: value });
+
+    // Validation in real-time
+    if (name === 'email') {
+      const emailError = validateEmail(value);
+      setErrors({ ...errors, email: emailError });
+    } else if (name === 'phone') {
+      const phoneError = validatePhone(value);
+      setErrors({ ...errors, phone: phoneError });
+    }
+
+    onDataChange({ ...formDataState, [name]: value });
+    validateForm(); // Check form validity whenever data changes
+  };
+
+  // Handle image upload
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      setFormData({ ...formData, profileImage: reader.result });
-      onDataChange({ ...formData, profileImage: reader.result });
+      setFormDataState({ ...formDataState, profileImage: reader.result });
+      onDataChange({ ...formDataState, profileImage: reader.result });
+      validateForm(); // Validate after image upload
     };
     reader.readAsDataURL(file);
   };
 
+  useEffect(() => {
+    validateForm(); // Initial validation
+  }, [formDataState]);
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    validateForm();
+    if (Object.values(errors).every(err => err === '') && formDataState.name && formDataState.email && formDataState.phone) {
+      // Submit form data
+      console.log('Form submitted successfully!', formDataState);
+      // You can add additional submission logic here (like API call)
+    }
+  };
+
   return (
     <Box 
+      component="form"
+      onSubmit={handleSubmit}
       sx={{
         p: 3,
         borderRadius: '10px',
@@ -68,10 +96,9 @@ const PersonalInfoForm = ({ onDataChange }) => {
         Informations Personnelles
       </Typography>
 
-      {/* Avatar pour l'image de profil */}
       <Box sx={{ textAlign: 'center', mb: 3 }}>
-        {formData.profileImage ? (
-          <Avatar src={formData.profileImage} sx={{ width: 100, height: 100, margin: 'auto' }} />
+        {formDataState.profileImage ? (
+          <Avatar src={formDataState.profileImage} sx={{ width: 100, height: 100, margin: 'auto' }} />
         ) : (
           <Avatar sx={{ width: 100, height: 100, margin: 'auto' }}>
             <InsertPhoto />
@@ -79,17 +106,17 @@ const PersonalInfoForm = ({ onDataChange }) => {
         )}
       </Box>
 
-      {/* Formulaire d'informations */}
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
             fullWidth
             label="Nom"
             name="name"
-            value={formData.name}
+            value={formDataState.name}
             onChange={handleChange}
             required
             margin="normal"
+            placeholder="Entrez votre nom"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -107,12 +134,13 @@ const PersonalInfoForm = ({ onDataChange }) => {
             label="Email"
             name="email"
             type="email"
-            value={formData.email}
+            value={formDataState.email}
             onChange={handleChange}
             required
             margin="normal"
             error={!!errors.email}
             helperText={errors.email}
+            placeholder="Entrez votre email"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -129,9 +157,10 @@ const PersonalInfoForm = ({ onDataChange }) => {
             fullWidth
             label="Adresse"
             name="address"
-            value={formData.address}
+            value={formDataState.address}
             onChange={handleChange}
             margin="normal"
+            placeholder="Entrez votre adresse"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -148,11 +177,12 @@ const PersonalInfoForm = ({ onDataChange }) => {
             fullWidth
             label="Téléphone"
             name="phone"
-            value={formData.phone}
+            value={formDataState.phone}
             onChange={handleChange}
             margin="normal"
             error={!!errors.phone}
             helperText={errors.phone}
+            placeholder="Entrez votre numéro de téléphone"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -165,7 +195,8 @@ const PersonalInfoForm = ({ onDataChange }) => {
         </Grid>
 
         <Grid item xs={12}>
-        <input
+          <Divider sx={{ my: 2 }} />
+          <input
             accept="image/*"
             style={{ display: 'none' }}
             id="profile-image-upload"
@@ -182,14 +213,15 @@ const PersonalInfoForm = ({ onDataChange }) => {
               Choisir une image
             </Button>
           </label>
+          <Divider sx={{ my: 2 }} />
         </Grid>
       </Grid>
 
-      {/* Bouton d'action */}
       <Box sx={{ textAlign: 'center', mt: 4 }}>
         <Button 
           variant="contained" 
           color="primary" 
+          type="submit" // Set the button type to submit
           sx={{ px: 4, py: 1, fontSize: '16px', borderRadius: '20px' }}
         >
           Sauvegarder

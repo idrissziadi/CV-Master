@@ -6,7 +6,6 @@ import EducationForm from './EducationForm';
 import SkillsForm from './SkillsForm';
 import ProjectsForm from './ProjectsForm';
 import TemplateSelection from './TemplateSelection';
-import CustomizationOptions from './CustomizationOptions';
 import CVPreview from './CVPreview';
 
 const steps = [
@@ -16,7 +15,6 @@ const steps = [
   'Compétences',
   'Projets',
   'Sélection du Modèle',
-  'Personnalisation',
   'Aperçu du CV',
 ];
 
@@ -24,8 +22,14 @@ const StepperComponent = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [formValid, setFormValid] = useState(false); // New state for form validity
 
-  const handleNext = () => setActiveStep(prevStep => prevStep + 1);
+  const handleNext = () => {
+    if (formValid) {
+      setActiveStep(prevStep => prevStep + 1);
+    }
+  };
+
   const handleBack = () => setActiveStep(prevStep => prevStep - 1);
 
   const handleDataChange = (data) => {
@@ -40,25 +44,24 @@ const StepperComponent = () => {
   const renderStepContent = (step) => {
     switch (step) {
       case 0:
-        return <PersonalInfoForm onDataChange={handleDataChange} />;
+        return <PersonalInfoForm formData={formData} onDataChange={handleDataChange} setFormValid={setFormValid} />;
       case 1:
-        return <ExperienceForm onDataChange={handleDataChange} />;
+        return <ExperienceForm formData={formData} onDataChange={handleDataChange} setFormValid={setFormValid} />;
       case 2:
-        return <EducationForm onDataChange={handleDataChange} />;
+        return <EducationForm formData={formData} onDataChange={handleDataChange} setFormValid={setFormValid} />;
       case 3:
-        return <SkillsForm onDataChange={handleDataChange} />;
+        return <SkillsForm formData={formData} onDataChange={handleDataChange} setFormValid={setFormValid} />;
       case 4:
-        return <ProjectsForm onDataChange={handleDataChange} />;
+        return <ProjectsForm formData={formData} onDataChange={handleDataChange} setFormValid={setFormValid} />;
       case 5:
-        return <TemplateSelection onSelectTemplate={handleSelectTemplate} />;
+        return <TemplateSelection onSelectTemplate={handleSelectTemplate} setFormValid={setFormValid} />;
       case 6:
-        return <CustomizationOptions selectedTemplate={selectedTemplate} onDataChange={handleDataChange} />;
-      case 7:
         return <CVPreview data={{ ...formData, template: selectedTemplate }} />;
       default:
         return null;
     }
   };
+  
 
   return (
     <Box>
