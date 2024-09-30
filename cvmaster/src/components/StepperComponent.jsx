@@ -1,4 +1,3 @@
-// components/StepperComponent.js
 import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Button, Box } from '@mui/material';
 import PersonalInfoForm from './PersonalInfoForm';
@@ -6,10 +5,9 @@ import ExperienceForm from './ExperienceForm';
 import EducationForm from './EducationForm';
 import SkillsForm from './SkillsForm';
 import ProjectsForm from './ProjectsForm';
-import CVPreview from './CVPreview';
 import TemplateSelection from './TemplateSelection';
 import CustomizationOptions from './CustomizationOptions';
-import templates from '../data/templates'; // Importez vos modèles ici
+import CVPreview from './CVPreview';
 
 const steps = [
   'Informations Personnelles',
@@ -19,7 +17,7 @@ const steps = [
   'Projets',
   'Sélection du Modèle',
   'Personnalisation',
-  'Aperçu du CV'
+  'Aperçu du CV',
 ];
 
 const StepperComponent = () => {
@@ -27,13 +25,8 @@ const StepperComponent = () => {
   const [formData, setFormData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
 
-  const handleNext = () => {
-    setActiveStep((prevStep) => prevStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevStep) => prevStep - 1);
-  };
+  const handleNext = () => setActiveStep(prevStep => prevStep + 1);
+  const handleBack = () => setActiveStep(prevStep => prevStep - 1);
 
   const handleDataChange = (data) => {
     setFormData({ ...formData, ...data });
@@ -41,7 +34,7 @@ const StepperComponent = () => {
 
   const handleSelectTemplate = (template) => {
     setSelectedTemplate(template);
-    handleNext(); // Passer à l'étape suivante après la sélection du modèle
+    handleNext();
   };
 
   const renderStepContent = (step) => {
@@ -59,12 +52,7 @@ const StepperComponent = () => {
       case 5:
         return <TemplateSelection onSelectTemplate={handleSelectTemplate} />;
       case 6:
-        return (
-          <CustomizationOptions 
-            selectedTemplate={selectedTemplate} 
-            onDataChange={handleDataChange} 
-          />
-        );
+        return <CustomizationOptions selectedTemplate={selectedTemplate} onDataChange={handleDataChange} />;
       case 7:
         return <CVPreview data={{ ...formData, template: selectedTemplate }} />;
       default:
@@ -73,7 +61,7 @@ const StepperComponent = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -81,23 +69,30 @@ const StepperComponent = () => {
           </Step>
         ))}
       </Stepper>
-      <Box mt={2}>
+
+      <Box mt={4}>
         {renderStepContent(activeStep)}
-        <Box mt={2}>
+        <Box mt={4} display="flex" justifyContent="space-between">
           <Button disabled={activeStep === 0} onClick={handleBack}>
             Précédent
           </Button>
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             onClick={handleNext}
-            disabled={activeStep === 5 && !selectedTemplate} // Désactiver le bouton si aucun modèle n'est sélectionné
+            disabled={activeStep === 5 && !selectedTemplate}
+            sx={{
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+              },
+            }}
           >
             {activeStep === steps.length - 1 ? 'Terminer' : 'Suivant'}
           </Button>
         </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 
