@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Stepper, Step, StepLabel, Button, Box, Dialog, DialogActions, DialogContent, DialogTitle, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import PersonalInfoForm from './PersonalInfoForm';
 import ExperienceForm from './ExperienceForm';
 import EducationForm from './EducationForm';
@@ -24,6 +25,9 @@ const StepperComponent = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [formValid, setFormValid] = useState(false);
   const [openDialog, setOpenDialog] = useState(false); // State to control dialog open/close
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Detect if screen is small
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -108,7 +112,8 @@ const StepperComponent = () => {
 
   return (
     <Box>
-      <Stepper activeStep={activeStep} alternativeLabel>
+      {/* Responsive Stepper */}
+      <Stepper activeStep={activeStep} alternativeLabel={!isSmallScreen} orientation={isSmallScreen ? 'vertical' : 'horizontal'}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

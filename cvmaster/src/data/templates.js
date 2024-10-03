@@ -1,12 +1,21 @@
 // data/templates.js
 import { createTheme } from '@mui/material/styles';
-
+import BoldBeautiful from './../assets/BoldBeautiful.png';
+import Classic from './../assets/Classic.png';
+import CreativeDesigner from './../assets/CreativeDesigner.png';
+import Fresh from './../assets/Fresh.png';
+import MinimalistAproach from './../assets/MinimalistApproach.png';
+import ModernProfessional from './../assets/modernProfessional.png';
+import Simple from './../assets/Simple.png';
+import SophisticatedStyle from './../assets/SophisticatedStyle.png';
+import TechSawy from './../assets/TechSawy.png';
+import Traditionnal from './../assets/Traditionnal.png';
 const templates = [
   {
     id: 1,
     name: "Classic Elegance",
     description: "A timeless design with a focus on simplicity, perfect for traditional job applications.",
-    imageUrl: "https://example.com/classic-elegance.png",
+    imageUrl: Classic,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -43,7 +52,7 @@ const templates = [
     id: 2,
     name: "Modern Professional",
     description: "A clean and modern template with ample whitespace, suitable for various industries.",
-    imageUrl: "https://example.com/modern-professional.png",
+    imageUrl: ModernProfessional,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -80,7 +89,7 @@ const templates = [
     id: 3,
     name: "Creative Designer",
     description: "A vibrant and eye-catching design, ideal for creative professionals.",
-    imageUrl: "https://example.com/creative-designer.png",
+    imageUrl: CreativeDesigner,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -117,7 +126,7 @@ const templates = [
     id: 4,
     name: "Minimalist Approach",
     description: "A sleek and minimalist design that emphasizes content over clutter.",
-    imageUrl: "https://example.com/minimalist-approach.png",
+    imageUrl: MinimalistAproach,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -154,7 +163,7 @@ const templates = [
     id: 5,
     name: "Bold and Beautiful",
     description: "A striking design that combines bold typography with strong visuals.",
-    imageUrl: "https://example.com/bold-and-beautiful.png",
+    imageUrl: BoldBeautiful,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -191,7 +200,7 @@ const templates = [
     id: 6,
     name: "Sophisticated Style",
     description: "An elegant and refined template suitable for high-level professional positions.",
-    imageUrl: "https://example.com/sophisticated-style.png",
+    imageUrl: SophisticatedStyle,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -228,7 +237,7 @@ const templates = [
     id: 7,
     name: "Tech Savvy",
     description: "A contemporary design with a techy feel, perfect for the IT sector.",
-    imageUrl: "https://example.com/tech-savvy.png",
+    imageUrl: TechSawy,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -265,7 +274,7 @@ const templates = [
     id: 8,
     name: "Simple yet Elegant",
     description: "A straightforward design that conveys professionalism without distractions.",
-    imageUrl: "https://example.com/simple-yet-elegant.png",
+    imageUrl: Simple,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -302,7 +311,7 @@ const templates = [
     id: 9,
     name: "Fresh Start",
     description: "A fresh and innovative design that stands out with its unique layout.",
-    imageUrl: "https://example.com/fresh-start.png",
+    imageUrl: Fresh,
     theme: createTheme({
       palette: {
         mode: 'light',
@@ -339,7 +348,7 @@ const templates = [
     id: 10,
     name: "Traditional Format",
     description: "A classic CV layout that adheres to traditional formats for formal applications.",
-    imageUrl: "https://example.com/traditional-format.png",
+    imageUrl: Traditionnal,
     theme: createTheme({
       palette: {
         mode: 'light',
