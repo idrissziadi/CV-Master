@@ -148,7 +148,7 @@ const StepperComponent = () => {
       <Dialog open={openDialog} onClose={() => handleDialogClose(false)}>
         <DialogTitle>Confirmation</DialogTitle>
         <DialogContent>
-          <p>Êtes-vous sûr de vouloir terminer ? Tous les détails seront réinitialisés.</p>
+          <p>Êtes-vous sûr de vouloir terminer ? Tous les détails seront réinitialisés!</p>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => handleDialogClose(false)} color="primary">
