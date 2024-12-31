@@ -12,25 +12,25 @@ import {
 import { Delete as DeleteIcon, Add as AddIcon, Work as WorkIcon, Business as BusinessIcon, AccessTime as AccessTimeIcon } from '@mui/icons-material';
 
 const ExperienceForm = ({ formData, onDataChange, setFormValid }) => {
-  const { experiences = [{ jobTitle: '', company: '', duration: '' }] } = formData; // Destructure experiences from formData
+  const { experiences = [{ jobTitle: '', company: '', duration: '' }] } = formData; 
   const [errors, setErrors] = React.useState({});
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
     const newExperiences = experiences.map((exp, i) => (i === index ? { ...exp, [name]: value } : exp));
-    onDataChange({ experiences: newExperiences }); // Update the parent state
+    onDataChange({ experiences: newExperiences }); 
   };
 
   const addExperience = () => {
     const lastExperience = experiences[experiences.length - 1];
     if (lastExperience && validateExperience(lastExperience)) {
-      onDataChange({ experiences: [...experiences, { jobTitle: '', company: '', duration: '' }] }); // Add a new experience
+      onDataChange({ experiences: [...experiences, { jobTitle: '', company: '', duration: '' }] }); 
       setErrors({});
     }
   };
 
   const validateExperience = (experience) => {
-    if (!experience) return false; // Early return if experience is undefined
+    if (!experience) return false; 
     const newErrors = {};
     if (!experience.jobTitle) newErrors.jobTitle = 'Le poste est requis.';
     if (!experience.company) newErrors.company = 'L\'entreprise est requise.';
@@ -42,12 +42,12 @@ const ExperienceForm = ({ formData, onDataChange, setFormValid }) => {
 
   const removeExperience = (index) => {
     const newExperiences = experiences.filter((_, i) => i !== index);
-    onDataChange({ experiences: newExperiences }); // Update the parent state
+    onDataChange({ experiences: newExperiences }); 
   };
 
   useEffect(() => {
     const allValid = experiences.every(validateExperience);
-    setFormValid(allValid); // Set the overall form validity
+    setFormValid(allValid); 
   }, [experiences, setFormValid]);
 
   return (

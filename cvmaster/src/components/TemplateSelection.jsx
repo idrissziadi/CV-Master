@@ -4,7 +4,6 @@ import { Grid, Card, CardContent, Typography, CardMedia, Button } from '@mui/mat
 import { styled } from '@mui/system';
 import templates from '../data/templates';
 
-// Custom styling for the Card to give it more space and larger size
 const StyledCard = styled(Card)(({ theme }) => ({
   height: '100%',
   display: 'flex',
@@ -12,15 +11,14 @@ const StyledCard = styled(Card)(({ theme }) => ({
   boxShadow: theme.shadows[3],
 }));
 
-// Custom CardMedia to ensure proper image scaling
 const StyledCardMedia = styled(CardMedia)({
-  height: '200px', // Increased the height for better display of images
+  height: '200px', 
   backgroundSize: 'cover',
   backgroundPosition: 'center',
 });
 
 const StyledCardContent = styled(CardContent)({
-  flexGrow: 1, // Ensures content takes the remaining space in the Card
+  flexGrow: 1, 
 });
 
 const TemplateSelection = ({ onSelectTemplate }) => {
@@ -47,7 +45,7 @@ const TemplateSelection = ({ onSelectTemplate }) => {
               color="primary"
               variant="contained"
               onClick={() => onSelectTemplate(template)}
-              style={{ margin: '16px' }} // Adds margin to the button for better spacing
+              style={{ margin: '16px' }} 
             >
               Sélectionner
             </Button>

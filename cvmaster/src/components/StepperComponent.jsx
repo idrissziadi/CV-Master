@@ -24,14 +24,14 @@ const StepperComponent = () => {
   const [formData, setFormData] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [formValid, setFormValid] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false); // State to control dialog open/close
+  const [openDialog, setOpenDialog] = useState(false); 
 
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); // Detect if screen is small
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm')); 
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
-      setOpenDialog(true); // Open dialog when trying to finish
+      setOpenDialog(true);
     } else if (formValid) {
       setActiveStep((prevStep) => prevStep + 1);
     }

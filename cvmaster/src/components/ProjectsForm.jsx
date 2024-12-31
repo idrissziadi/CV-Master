@@ -14,7 +14,7 @@ import { Delete as DeleteIcon, Add as AddIcon, Work as WorkIcon } from '@mui/ico
 const ProjectsForm = ({ formData, onDataChange, setFormValid }) => {
   const initialProjects = Array.isArray(formData.projects?.projectss)
     ? formData.projects.projectss
-    : [{ title: '', description: '' }]; // Ensure we initialize with an array
+    : [{ title: '', description: '' }]; 
 
   const [projects, setProjects] = useState(initialProjects);
   const [errors, setErrors] = useState(Array(initialProjects.length).fill({ title: '', description: '' }));

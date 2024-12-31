@@ -59,13 +59,13 @@ const PersonalInfoForm = ({ formData, onDataChange, setFormValid }) => {
     reader.onloadend = () => {
       setFormDataState({ ...formDataState, profileImage: reader.result });
       onDataChange({ ...formDataState, profileImage: reader.result });
-      validateForm(); // Validate after image upload
+      validateForm(); 
     };
     reader.readAsDataURL(file);
   };
 
   useEffect(() => {
-    validateForm(); // Initial validation
+    validateForm(); 
   }, [formDataState]);
 
   // Handle form submission
@@ -73,9 +73,9 @@ const PersonalInfoForm = ({ formData, onDataChange, setFormValid }) => {
     e.preventDefault();
     validateForm();
     if (Object.values(errors).every(err => err === '') && formDataState.name && formDataState.email && formDataState.phone) {
-      // Submit form data
+
       console.log('Form submitted successfully!', formDataState);
-      // You can add additional submission logic here (like API call)
+      
     }
   };
 
@@ -221,7 +221,7 @@ const PersonalInfoForm = ({ formData, onDataChange, setFormValid }) => {
         <Button 
           variant="contained" 
           color="primary" 
-          type="submit" // Set the button type to submit
+          type="submit" 
           sx={{ px: 4, py: 1, fontSize: '16px', borderRadius: '20px' }}
         >
           Sauvegarder

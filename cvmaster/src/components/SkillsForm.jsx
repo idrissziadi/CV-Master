@@ -20,7 +20,7 @@ const SkillsForm = ({ formData, onDataChange, setFormValid }) => {
         const newSkills = skills.map((sk, i) => (i === index ? { ...sk, [name]: value } : sk));
         onDataChange({ skills: newSkills });
 
-        // Clear error for the specific field
+
         setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
     };
 

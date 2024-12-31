@@ -9,8 +9,8 @@ const CVPreview = ({ data }) => {
   const exportToImage = () => {
     const element = cvRef.current;
     html2canvas(element, {
-      scale: 2, // Increases resolution of the exported image
-      useCORS: true, // For handling CORS issues if using external images
+      scale: 2, 
+      useCORS: true, 
     }).then((canvas) => {
       const link = document.createElement('a');
       link.href = canvas.toDataURL('image/png');
@@ -32,8 +32,8 @@ const CVPreview = ({ data }) => {
             margin: 'auto',
             fontFamily: theme.typography.fontFamily,
             color: theme.palette.text.primary,
-            position: 'relative', // Helps in stacking elements properly if needed
-            overflow: 'hidden', // Prevents any overflow issues
+            position: 'relative', 
+            overflow: 'hidden', 
             }}
         >
 

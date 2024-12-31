@@ -1,8 +1,8 @@
 import React from 'react';
 import { CssBaseline, Container, Paper, ThemeProvider, AppBar, Toolbar, Typography, Box, Link } from '@mui/material';
 import StepperComponent from './components/StepperComponent';
-import { theme } from './theme';  // Import de ton thème personnalisé
-
+import { theme } from './theme';  
+import './App.css';
 // Header Component
 const Header = () => (
   <AppBar position="static">
@@ -38,13 +38,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* Structure globale avec flexbox pour le layout */}
+
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh',
         }}
+        className="container"
       >
         {/* Header Section */}
         <Header />
